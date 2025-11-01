@@ -1,40 +1,39 @@
 package lotto.domain;
 
 public enum Prize {
-    FIRST(6, 2000000000, "6개 일치"),            // 1등
-    SECOND(5, 30000000, "5개 일치, 보너스 볼 일치"),      // 2등
-    THIRD(5, 1500000, "5개 일치"),                // 3등
-    FOURTH(4, 50000, "4개 일치"),                 // 4등
-    FIFTH(3, 5000, "3개 일치"),                   // 5등
-    NONE(0,0, "꽝");
+    FIRST(6, 2_000_000_000L, false),
+    SECOND(5, 30_000_000L, true),
+    THIRD(5, 1_500_000L, false),
+    FOURTH(4, 50_000L, false),
+    FIFTH(3, 5_000L, false),
+    NONE(0, 0L, false);
 
-    private final int matchCount;        // 등급 순위
-    private final int prizeMoney; // 상금
-    private final String description; // 등급 설명
+    private final int matchCount;
+    private final long prizeMoney;
+    private final boolean hasBonus;
 
-    Prize(int matchCount, int prizeMoney, String description) {
+    Prize(int matchCount, long prizeMoney, boolean hasBonus) {
         this.matchCount = matchCount;
         this.prizeMoney = prizeMoney;
-        this.description = description;
+        this.hasBonus = hasBonus;
     }
 
     public int getMatchCount() {
         return matchCount;
     }
-
-    public int getPrizeMoney() {
+    public long getPrizeMoney() {
         return prizeMoney;
     }
-
-    public String getDescription() {
-        return description;
+    public boolean hasBonus() {
+        return hasBonus;
     }
 
-    @Override
-    public String toString() {
-        if (matchCount >= 3) {
-            return description + " (" + prizeMoney + "원) - ";
-        }
-        return "";
+    public static Prize getPrizeBy(int matchCount, boolean bonusMatch) {
+        if (matchCount == 6) return FIRST;
+        if (matchCount == 5 && bonusMatch)  return SECOND;
+        if (matchCount == 5)  return THIRD;
+        if (matchCount == 4)  return FOURTH;
+        if (matchCount == 3)  return FIFTH;
+        return NONE;
     }
 }
