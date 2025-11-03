@@ -81,6 +81,6 @@ class LottoStatisticsTest {
         List<LottoResult> results = List.of(new LottoResult(6, false));
         LottoStatistics statistics = new LottoStatistics(results, 1000);
         // 2,000,000,000 / 1,000 * 100 = 1,000,000,000%
-        assertThat(statistics.getReturnRate()).isEqualTo(1_000_000_000.0);
+        assertThat(statistics.getReturnRate()).isEqualTo(200_000_000.0);
     }
 }
